@@ -1,0 +1,74 @@
+/* Base styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    /* padding: 20px; */
+    background-color: #f4f6f8;
+    color: #333;
+    text-align: center;
+}
+
+/* Heading */
+h2 {
+    font-size: 28px;
+    color: #2c3e50;
+    /* margin-bottom: 10px; */
+}
+
+/* Back link */
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    color: #3498db;
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: #1d6fa5;
+}
+
+/* Gallery layout */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 5px 40px;
+}
+
+/* Image card styling */
+.image-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.image-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Image inside card */
+.image-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-bottom: 1px solid #eee;
+}
+
+/* Image details */
+.details {
+    padding: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+    background-color: #fafafa;
+    text-align: left;
+    color: #555;
+}
+
+.details strong {
+    color: #333;
+}

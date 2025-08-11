@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Emergency Reports</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reports.css') }}">
+
+</head>
+
+<body>
+    <!-- templates/partials/header.html -->
+    <header class="site-header">
+        <div class="container">
+            <h1>Smart Street Surveillance</h1>
+            <p class="tagline">Women's Safety Monitoring System</p>
+        </div>
+    </header>
+
+    <!-- templates/partials/navbar.html -->
+    <nav class="navbar">
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="/">Dashboard</a></li>
+                <li><a href="{{ url_for('view_data') }}">Sensor Data</a></li>
+                <li><a href="{{ url_for('show_map') }}">Emergency Map</a></li>
+                <li><a href="{{ url_for('show_detected_images') }}">Emergency Detected Images</a></li>
+                <li><a href="{{ url_for('reports') }}">Emergency Graphs & Analytics</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <br>
+    <div class="container">
+        <h1>Statewise Emergency Reports</h1>
+        <canvas id="stateChart"></canvas>
+    </div>
+    <br>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        const locationStates = {{ states | tojson | safe }};
+        const reportCounts = {{ counts | tojson | safe }};
+
+        const ctx = document.getElementById('stateChart').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: locationStates,
+                datasets: [{
+                    label: 'Emergency Reports by Location',
+                    data: reportCounts,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: 'Emergencies by State'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Count'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'State'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+
+    <!-- templates/partials/footer.html -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; {{ now().year }} Smart Surveillance | All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

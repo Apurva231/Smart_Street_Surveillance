@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sensor Data Logs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/data.css') }}" />
+  </head>
+
+  <body>
+    <!-- templates/partials/header.html -->
+    <header class="site-header">
+      <div class="container">
+        <h1>Smart Street Surveillance</h1>
+        <p class="tagline">Women's Safety Monitoring System</p>
+      </div>
+    </header>
+
+    <!-- templates/partials/navbar.html -->
+    <nav class="navbar">
+      <div class="container">
+        <ul class="nav-links">
+          <li><a href="/">Dashboard</a></li>
+          <li><a href="{{ url_for('view_data') }}">Sensor Data</a></li>
+          <li><a href="{{ url_for('show_map') }}">Emergency Map</a></li>
+          <li><a href="{{ url_for('show_detected_images') }}">Emergency Detected Images</a></li>
+          <li><a href="{{ url_for('reports') }}">Emergency Graphs & Analytics</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+<br>
+    <div class="container">
+      <h1>Sensor Data Logs <span class="subtitle">(Latest 100)</span></h1>
+      <!-- <a href="/" class="back-link">← Back to Dashboard</a> -->
+<br>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Temperature (°C)</th>
+              <th>Humidity (%)</th>
+              <th>CO₂ (ppm)</th>
+              <th>Motion</th>
+              <th>Emergency</th>
+              <th>Image</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in records %}
+            <tr>
+              <td>{{ row.timestamp }}</td>
+              <td>{{ row.temperature }}</td>
+              <td>{{ row.humidity }}</td>
+              <td>{{ row.co2 }}</td>
+              <td>
+                <span class="{{ 'yes' if row.motion else 'no' }}"
+                  >{{ 'Yes' if row.motion else 'No' }}</span
+                >
+              </td>
+              <td>
+                <span class="{{ 'emergency' if row.emergency else 'safe' }}"
+                  >{{ row.emergency }}</span
+                >
+              </td>
+              <td class="image-cell">
+                {% if row.image_path %}
+                <img
+                  src="{{ url_for('static', filename=row.image_path) }}"
+                  alt="Snapshot"
+                  class="cell-img"
+                />
+                {% else %}
+                <span class="no-image">N/A</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+  <!-- templates/partials/footer.html -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; {{ now().year }} Smart Surveillance | All rights reserved.</p>
+    </div>
+  </footer>
+</html>

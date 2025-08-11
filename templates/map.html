@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Emergency Locations Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}">
+</head>
+
+<body>
+<!-- templates/partials/header.html -->
+<header class="site-header">
+    <div class="container">
+        <h1>Smart Street Surveillance</h1>
+        <p class="tagline">Women's Safety Monitoring System</p>
+    </div>
+</header>
+
+<!-- templates/partials/navbar.html -->
+<nav class="navbar">
+    <div class="container">
+        <ul class="nav-links">
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="{{ url_for('view_data') }}">Sensor Data</a></li>
+            <li><a href="{{ url_for('show_map') }}">Emergency Map</a></li>
+            <li><a href="{{ url_for('show_detected_images') }}">Emergency Detected Images</a></li>
+            <li><a href="{{ url_for('reports') }}">Emergency Graphs & Analytics</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+  <header>
+    <h2>🗺️ Emergency Locations Detected</h2>
+    <!-- <a href="/">← Back to Dashboard</a> -->
+  </header>
+
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+
+  <!-- templates/partials/footer.html -->
+<footer class="site-footer">
+    <div class="container">
+        <p>&copy; {{ now().year }} Smart Surveillance | All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sensor & Camera Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}" defer></script>
+</head>
+<body>
+<!-- templates/partials/header.html -->
+<header class="site-header">
+    <div class="container">
+        <h1>Smart Street Surveillance</h1>
+        <p class="tagline">Women's Safety Monitoring System</p>
+    </div>
+</header>
+
+<!-- templates/partials/navbar.html -->
+<nav class="navbar">
+    <div class="container">
+        <ul class="nav-links">
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="{{ url_for('view_data') }}">Sensor Data</a></li>
+            <li><a href="{{ url_for('show_map') }}">Emergency Map</a></li>
+            <li><a href="{{ url_for('show_detected_images') }}">Emergency Detected Images</a></li>
+            <li><a href="{{ url_for('reports') }}">Emergency Graphs & Analytics</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+  <h1>Sensor & Camera Dashboard</h1>
+
+  <div class="container">
+
+    <!-- Sensor Section -->
+    <div class="sensor-container">
+      <div class="sensor" id="temperature">
+        <h3>Temperature</h3>
+        <p>{% if data.temperature is not none %}{{ data.temperature }} °C{% else %}<span class="error">N/A</span>{% endif %}</p>
+      </div>
+      <div class="sensor" id="humidity">
+        <h3>Humidity</h3>
+        <p>{% if data.humidity is not none %}{{ data.humidity }} %{% else %}<span class="error">N/A</span>{% endif %}</p>
+      </div>
+      <div class="sensor" id="co2">
+        <h3>CO2 Level</h3>
+        <p>{% if data.co2 is not none %}{{ data.co2 }} ppm{% else %}<span class="error">N/A</span>{% endif %}</p>
+      </div>
+      <div class="sensor" id="motion">
+        <h3>Motion</h3>
+        <p>{% if data.motion is not none %}{{ 'Detected' if data.motion else 'Not Detected' }}{% else %}<span class="error">N/A</span>{% endif %}</p>
+      </div>
+      <div class="sensor" id="ldr">
+        <h3>LDR</h3>
+        <p>{% if data.ldr is not none %}{{ data.ldr }}{% else %}<span class="error">N/A</span>{% endif %}</p>
+      </div>
+      <div class="sensor" id="emergency">
+        <h3>Emergency</h3>
+        <p>{% if data.emergency is not none %}{{ data.emergency }}{% else %}<span class="error">N/A</span>{% endif %}</p>
+      </div>
+    </div>
+
+    <!-- Links
+    <div class="links">
+      <a href="{{ url_for('view_data') }}">📋 View Sensor Data Logs</a>
+      <a href="{{ url_for('show_detected_images') }}">📸 View Emergency Detected Images</a>
+      <a href="{{ url_for('show_map') }}">🗺️ View Emergency Map</a>
+    </div> -->
+
+    <!-- Camera Feed -->
+    <div class="camera-section">
+      <h3>Live Camera Feed</h3>
+      <img src="{{ url_for('video_feed') }}" alt="Camera Feed" id="camera-feed">
+    </div>
+
+    <!-- Status -->
+    <p id="status"></p>
+
+  </div>
+
+  <!-- templates/partials/footer.html -->
+<footer class="site-footer">
+    <div class="container">
+        <p>&copy; {{ now().year }} Smart Surveillance | All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>
